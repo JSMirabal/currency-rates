@@ -1,3 +1,0 @@
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
-apply from: '../base_build.gradle'
