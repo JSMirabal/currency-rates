@@ -1,4 +1,4 @@
-package com.example.domain
+package com.example.domain.entity
 
 /**
  * Created by jsmirabal on 4/14/2019.
