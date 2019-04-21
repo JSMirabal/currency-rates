@@ -8,7 +8,7 @@ import kotlinx.coroutines.coroutineScope
 /**
  * Created by jsmirabal on 4/19/2019.
  */
-class CurrencyRateRepository {
+class CurrencyRepository {
 
     data class Range(val startDate: String, val endDate: String)
 
