@@ -1,9 +1,9 @@
-package com.example.domain.entity
+package com.example.data.network
 
 /**
- * Created by jsmirabal on 4/14/2019.
+ * Created by jsmirabal on 4/22/2019.
  */
-data class CurrencyRate(
+data class HistoryResponse(
     val base: String,
     val rates: List<Rate>,
     val startDate: String,

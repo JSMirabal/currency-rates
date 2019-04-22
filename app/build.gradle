@@ -4,8 +4,6 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: 'kotlin-kapt'
-
 apply from: '../base_build.gradle'
 
 android {
@@ -37,11 +35,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-alpha04"
     testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
-
-    // Room for database
-    def room_version = '2.0.0'
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
 
     def work_version = "1.0.1"
     implementation "android.arch.work:work-runtime-ktx:$work_version"

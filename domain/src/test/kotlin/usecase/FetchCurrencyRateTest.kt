@@ -35,8 +35,8 @@ class FetchCurrencyRateTest: BaseUnitTest() {
                 (failure is NetworkFailure || failure is ApiFailure) shouldEqual true
             },
             { success ->
-                params.startDate shouldEqual success.start_at
-                params.endDate shouldEqual success.end_at
+                params.startDate shouldEqual success.startDate
+                params.endDate shouldEqual success.endDate
             })
     }
 
@@ -55,8 +55,8 @@ class FetchCurrencyRateTest: BaseUnitTest() {
                 (failure is NetworkFailure || failure is ApiFailure) shouldEqual true
             },
             { success ->
-                params.startDate shouldEqual success.start_at
-                params.endDate shouldEqual success.end_at
+                params.startDate shouldEqual success.startDate
+                params.endDate shouldEqual success.endDate
             })
     }
 

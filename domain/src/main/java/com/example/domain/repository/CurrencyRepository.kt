@@ -1,8 +1,8 @@
 package com.example.domain.repository
 
 import com.example.domain.core.Either
-import com.example.domain.entity.CurrencyRate
 import com.example.domain.core.Failure
+import com.example.domain.entity.CurrencyRate
 import kotlinx.coroutines.coroutineScope
 
 /**
@@ -14,6 +14,6 @@ class CurrencyRepository {
 
     suspend fun fetchRange(params: Range): Either<Failure, CurrencyRate> {
         // TODO: Change with actual implementation in data module
-        return coroutineScope { Either.Right(CurrencyRate("EUR", params.startDate, params.endDate)) }
+        return coroutineScope { Either.Right(CurrencyRate("EUR", emptyList(), params.startDate, params.endDate)) }
     }
 }
