@@ -2,8 +2,8 @@ package core
 
 import BaseUnitTest
 import com.example.domain.core.BaseUseCase
-import com.example.domain.core.Either
-import com.example.domain.core.Failure
+import com.example.data.core.Either
+import com.example.data.core.Failure
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBe

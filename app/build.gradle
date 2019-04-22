@@ -41,6 +41,7 @@ dependencies {
 
     // Local modules
     implementation project(path: ':domain')
+    implementation project(path: ':data')
 
     androidTestImplementation 'androidx.test:runner:1.2.0-alpha04'
     androidTestImplementation 'androidx.test:rules:1.1.1'

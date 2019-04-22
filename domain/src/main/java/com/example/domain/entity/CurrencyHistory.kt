@@ -3,7 +3,7 @@ package com.example.domain.entity
 /**
  * Created by jsmirabal on 4/14/2019.
  */
-data class CurrencyRate(
+data class CurrencyHistory(
     val base: String,
     val rates: List<Rate>,
     val startDate: String,

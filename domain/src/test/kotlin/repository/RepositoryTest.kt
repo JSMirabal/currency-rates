@@ -1,8 +1,8 @@
 package repository
 
 import BaseUnitTest
-import com.example.domain.core.Failure.ApiFailure
-import com.example.domain.core.Failure.NetworkFailure
+import com.example.data.core.Failure.ApiFailure
+import com.example.data.core.Failure.NetworkFailure
 import com.example.domain.repository.CurrencyRepository
 import com.example.domain.repository.CurrencyRepository.Range
 import kotlinx.coroutines.runBlocking
@@ -21,7 +21,7 @@ class RepositoryTest: BaseUnitTest() {
     fun `executing fetchRange() should return Failure or CurrencyRate`() {
 
         val params = Range(startDate, endDate)
-        val result = runBlocking { CurrencyRepository().fetchRange(params) }
+        val result = runBlocking { CurrencyRepository().fetchHistory(params) }
 
         result.either(
             { failure ->

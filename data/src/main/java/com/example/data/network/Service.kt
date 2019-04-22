@@ -1,5 +1,6 @@
 package com.example.data.network
 
+import com.example.data.core.Either
 import com.example.data.core.Failure
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -43,13 +44,13 @@ object Service {
 
         private val currencyService = retrofit.create(CurrencyApi::class.java)
 
-        fun fetchHistory(params: Params): Pair<Failure?, HistoryResponse?> =
+        fun fetchHistory(params: Params): Either<Failure?, HistoryResponse?> =
             currencyService
                 .fetchHistory(params.startDate, params.endDate, params.base, params.symbols)
                 .execute().run {
                     when {
-                        isSuccessful -> body()?.run { Pair(null, this) } ?: Pair(Failure.ApiFailure("Empty body"), null)
-                        else -> Pair(Failure.ApiFailure(errorBody()?.string() ?: "Unknown API Error"), null)
+                        isSuccessful -> body()?.run { Either.Right(this) } ?: Either.Left(Failure.ApiFailure("Empty body"))
+                        else -> Either.Left(Failure.ApiFailure(errorBody()?.string() ?: "Unknown API Error"))
                     }
                 }
     }
