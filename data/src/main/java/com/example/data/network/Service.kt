@@ -15,8 +15,8 @@ object Service {
     data class Params(
         val startDate: String,
         val endDate: String,
-        val base: String,
-        val symbols: String
+        val base: String = "EUR",
+        val symbols: String = "USD"
     )
 
     fun fetchHistory(params: Params) = withRetrofit(params)
@@ -44,7 +44,7 @@ object Service {
 
         private val currencyService = retrofit.create(CurrencyApi::class.java)
 
-        fun fetchHistory(params: Params): Either<Failure?, HistoryResponse?> =
+        fun fetchHistory(params: Params): Either<Failure, HistoryResponse> =
             currencyService
                 .fetchHistory(params.startDate, params.endDate, params.base, params.symbols)
                 .execute().run {

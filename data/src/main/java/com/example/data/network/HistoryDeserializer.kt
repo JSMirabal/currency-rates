@@ -16,6 +16,7 @@ class HistoryDeserializer : JsonDeserializer<HistoryResponse> {
         typeOfT: Type?,
         context: JsonDeserializationContext?
     ): HistoryResponse {
+
         val jsonObject = json?.asJsonObject
         return HistoryResponse(
             jsonObject?.get("base")?.asString ?: "not found",

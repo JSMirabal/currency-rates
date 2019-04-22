@@ -3,8 +3,8 @@ package repository
 import BaseUnitTest
 import com.example.data.core.Failure.ApiFailure
 import com.example.data.core.Failure.NetworkFailure
+import com.example.data.network.Service.Params
 import com.example.domain.repository.CurrencyRepository
-import com.example.domain.repository.CurrencyRepository.Range
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldEqual
 import org.junit.Test
@@ -18,9 +18,9 @@ class RepositoryTest: BaseUnitTest() {
     private val endDate = "04-21-2019"
 
     @Test
-    fun `executing fetchRange() should return Failure or CurrencyRate`() {
+    fun `executing fetchRange() should return Failure or CurrencyHistory`() {
 
-        val params = Range(startDate, endDate)
+        val params = Params(startDate, endDate)
         val result = runBlocking { CurrencyRepository().fetchHistory(params) }
 
         result.either(
@@ -32,5 +32,4 @@ class RepositoryTest: BaseUnitTest() {
                 params.endDate shouldEqual success.endDate
             })
     }
-
 }

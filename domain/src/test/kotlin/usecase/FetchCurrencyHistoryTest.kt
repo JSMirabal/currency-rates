@@ -5,9 +5,9 @@ import com.example.data.core.Either
 import com.example.data.core.Failure
 import com.example.data.core.Failure.ApiFailure
 import com.example.data.core.Failure.NetworkFailure
+import com.example.data.network.Service.Params
 import com.example.domain.entity.CurrencyHistory
 import com.example.domain.repository.CurrencyRepository
-import com.example.domain.repository.CurrencyRepository.Range
 import com.example.domain.usecase.FetchCurrencyHistory
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBe
@@ -27,7 +27,7 @@ class FetchCurrencyHistoryTest: BaseUnitTest() {
     @Test
     fun `running use case should return Failure or CurrencyHistory`() {
 
-        val params = Range(startDate, endDate)
+        val params = Params(startDate, endDate)
         val result = runBlocking { fetchCurrencyRate.run(params) }
 
         result.either(
@@ -44,7 +44,7 @@ class FetchCurrencyHistoryTest: BaseUnitTest() {
     fun `running async use case should return Failure or CurrencyRate`() {
         var result: Either<Failure, CurrencyHistory>? = null
 
-        val params = Range(startDate, endDate)
+        val params = Params(startDate, endDate)
 
         runBlocking { result = fetchCurrencyRate(params).await() }
 
@@ -63,7 +63,7 @@ class FetchCurrencyHistoryTest: BaseUnitTest() {
     @Test
     fun `calling cancel() should return a job cancelled`() {
         runBlocking {
-            val params = Range(startDate, endDate)
+            val params = Params(startDate, endDate)
             val job = fetchCurrencyRate(params)
             fetchCurrencyRate.cancel()
             (job.isCancelled || job.isCompleted) shouldBe true
