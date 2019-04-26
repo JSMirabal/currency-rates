@@ -1,5 +1,11 @@
 apply plugin: 'kotlin-kapt'
 
+ext {
+    compile_sdk_version = 28
+    target_sdk_version = compile_sdk_version
+    min_sdk_version = 23
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -17,8 +23,4 @@ dependencies {
 
     // Test
     testImplementation "org.amshove.kluent:kluent:1.14"
-}
-
-repositories {
-    mavenCentral()
 }

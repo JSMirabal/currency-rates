@@ -1,4 +1,4 @@
-package com.example.data.core
+package com.example.domain.core
 
 /**
  * Created by jsmirabal on 4/19/2019.
@@ -20,7 +20,7 @@ sealed class Either<out L, out R> {
             is Right -> fnR(value)
         }
 
-    fun <LL,RR> transform(fnL: (L) -> Left<LL>, fnR: (R) -> Right<RR>): Either<LL,RR> =
+    fun <LL, RR> transform(fnL: (L) -> Left<LL>, fnR: (R) -> Right<RR>): Either<LL, RR> =
         when (this) {
             is Left -> fnL(value)
             is Right -> fnR(value)

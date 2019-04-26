@@ -3,9 +3,6 @@ apply plugin: 'kotlin'
 apply from: '../base_build.gradle'
 
 dependencies {
-    // Local modules
-    implementation project(path: ':data')
-
     testImplementation "junit:junit:4.12"
     testImplementation "com.nhaarman:mockito-kotlin:1.4.0"
 }

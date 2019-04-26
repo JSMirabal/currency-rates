@@ -1,4 +1,4 @@
-package com.example.data.core
+package com.example.domain.core
 
 /**
  * Created by jsmirabal on 4/19/2019.

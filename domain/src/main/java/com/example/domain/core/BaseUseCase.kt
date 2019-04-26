@@ -1,7 +1,5 @@
 package com.example.domain.core
 
-import com.example.data.core.Either
-import com.example.data.core.Failure
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async

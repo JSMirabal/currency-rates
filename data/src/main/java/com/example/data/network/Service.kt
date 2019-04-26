@@ -1,7 +1,9 @@
 package com.example.data.network
 
-import com.example.data.core.Either
-import com.example.data.core.Failure
+import com.example.domain.core.Either.Left
+import com.example.domain.core.Either.Right
+import com.example.domain.core.Failure
+import com.example.domain.core.Params
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -11,13 +13,6 @@ import retrofit2.converter.gson.GsonConverterFactory
  * Created by jsmirabal on 4/21/2019.
  */
 object Service {
-
-    data class Params(
-        val startDate: String,
-        val endDate: String,
-        val base: String = "EUR",
-        val symbols: String = "USD"
-    )
 
     fun fetchHistory(params: Params) = withRetrofit(params)
 
@@ -44,13 +39,14 @@ object Service {
 
         private val currencyService = retrofit.create(CurrencyApi::class.java)
 
-        fun fetchHistory(params: Params): Either<Failure, HistoryResponse> =
+        fun fetchHistory(params: Params) =
             currencyService
                 .fetchHistory(params.startDate, params.endDate, params.base, params.symbols)
                 .execute().run {
                     when {
-                        isSuccessful -> body()?.run { Either.Right(this) } ?: Either.Left(Failure.ApiFailure("Empty body"))
-                        else -> Either.Left(Failure.ApiFailure(errorBody()?.string() ?: "Unknown API Error"))
+                        isSuccessful -> body()?.run { Right(this) } ?: Left(
+                            Failure.ApiFailure("Empty body"))
+                        else -> Left(Failure.ApiFailure(errorBody()?.string() ?: "Unknown API Error"))
                     }
                 }
     }

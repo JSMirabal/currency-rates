@@ -1,9 +1,9 @@
 package com.example.domain.usecase
 
-import com.example.data.core.Either
-import com.example.data.core.Failure
-import com.example.data.network.Service.Params
 import com.example.domain.core.BaseUseCase
+import com.example.domain.core.Either
+import com.example.domain.core.Failure
+import com.example.domain.core.Params
 import com.example.domain.entity.CurrencyHistory
 import com.example.domain.repository.CurrencyRepository
 

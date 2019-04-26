@@ -1,11 +1,10 @@
 package usecase
 
 import BaseUnitTest
-import com.example.data.core.Either
-import com.example.data.core.Failure
-import com.example.data.core.Failure.ApiFailure
-import com.example.data.core.Failure.NetworkFailure
-import com.example.data.network.Service.Params
+import com.example.domain.core.Either
+import com.example.domain.core.Failure
+import com.example.domain.core.Failure.*
+import com.example.domain.core.Params
 import com.example.domain.entity.CurrencyHistory
 import com.example.domain.repository.CurrencyRepository
 import com.example.domain.usecase.FetchCurrencyHistory
@@ -18,9 +17,9 @@ import org.junit.Test
 /**
  * Created by jsmirabal on 4/21/2019.
  */
-class FetchCurrencyHistoryTest: BaseUnitTest() {
+class FetchCurrencyHistoryTest : BaseUnitTest() {
 
-    private val fetchCurrencyRate = FetchCurrencyHistory(CurrencyRepository())
+    private val fetchCurrencyRate = FetchCurrencyHistory(MyRepository())
     private val startDate = "04-01-2019"
     private val endDate = "04-21-2019"
 
@@ -69,4 +68,10 @@ class FetchCurrencyHistoryTest: BaseUnitTest() {
             (job.isCancelled || job.isCompleted) shouldBe true
         }
     }
+}
+
+private class MyRepository : CurrencyRepository {
+    override fun fetchHistory(params: Params) = Either.Right(
+        CurrencyHistory(params.base, emptyList(), params.startDate, params.endDate)
+    )
 }

@@ -1,4 +1,4 @@
-package com.example.domain.core
+package com.example.data.core
 
 import com.example.data.network.HistoryResponse
 import com.example.domain.entity.CurrencyHistory
