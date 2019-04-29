@@ -3,6 +3,7 @@ apply plugin: 'kotlin'
 apply from: '../base_build.gradle'
 
 dependencies {
-    testImplementation "junit:junit:4.12"
-    testImplementation "com.nhaarman:mockito-kotlin:1.4.0"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.0-M1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.0-M1'
+    testImplementation "io.mockk:mockk:1.9.3"
 }

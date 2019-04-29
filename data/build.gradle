@@ -42,7 +42,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0-alpha04'
     androidTestImplementation 'androidx.test:rules:1.1.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'org.amshove.kluent:kluent-android:1.28'
 
     testImplementation "junit:junit:4.12"
-    testImplementation "com.nhaarman:mockito-kotlin:1.4.0"
 }

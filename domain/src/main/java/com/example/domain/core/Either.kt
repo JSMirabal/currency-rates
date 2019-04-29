@@ -5,8 +5,8 @@ package com.example.domain.core
  */
 sealed class Either<out L, out R> {
 
-    class Left<A>(val value: A): Either<A, Nothing>()
-    class Right<B>(val value: B): Either<Nothing, B>()
+    class Left<A>(val value: A) : Either<A, Nothing>()
+    class Right<B>(val value: B) : Either<Nothing, B>()
 
     val isRight get() = this is Right<R>
     val isLeft get() = this is Left<L>

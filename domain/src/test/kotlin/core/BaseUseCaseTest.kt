@@ -1,6 +1,5 @@
 package core
 
-import BaseUnitTest
 import com.example.domain.core.BaseUseCase
 import com.example.domain.core.Either
 import com.example.domain.core.Failure
@@ -8,12 +7,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldEqual
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 /**
  * Created by jsmirabal on 4/19/2019.
  */
-class BaseUseCaseTest : BaseUnitTest() {
+class BaseUseCaseTest {
 
     private val myUseCase = MyUseCase()
 

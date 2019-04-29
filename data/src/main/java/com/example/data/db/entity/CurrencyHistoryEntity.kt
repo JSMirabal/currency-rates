@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "currency_history")
 data class HistoryEntity(
     @PrimaryKey
-    val id: Long = 0,
+    val id: Long = 1234,
     val base: String,
     @ColumnInfo(name = "start_date")
     val startDate: String,
@@ -21,7 +21,7 @@ data class HistoryEntity(
     tableName = "rate", foreignKeys = [ForeignKey(
         entity = HistoryEntity::class,
         parentColumns = arrayOf("id"),
-        childColumns = arrayOf("rate_id"),
+        childColumns = arrayOf("history_id"),
         onDelete = CASCADE,
         onUpdate = CASCADE
     )]
@@ -30,6 +30,8 @@ data class RateEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "rate_id")
     val id: Long = 0,
+    @ColumnInfo(name = "history_id")
+    val historyId: Long,
     val date: String
 )
 
@@ -37,7 +39,7 @@ data class RateEntity(
     tableName = "currency", foreignKeys = [ForeignKey(
         entity = RateEntity::class,
         parentColumns = arrayOf("rate_id"),
-        childColumns = arrayOf("currency_id"),
+        childColumns = arrayOf("rate_id"),
         onDelete = CASCADE,
         onUpdate = CASCADE
     )]
@@ -46,6 +48,8 @@ data class CurrencyEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "currency_id")
     val id: Long = 0,
+    @ColumnInfo(name = "rate_id")
+    val rateId: Long,
     val name: String,
     val value: Double
 )

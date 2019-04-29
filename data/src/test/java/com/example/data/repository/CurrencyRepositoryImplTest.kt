@@ -19,6 +19,7 @@ class CurrencyRepositoryImplTest : BaseUnitTest() {
     fun `executing fetchRange should return anything`() {
         val result = CurrencyRepositoryImpl().fetchHistory(Params(startDate, endDate))
         println(result)
+        result shouldEqual endDate
     }*/
 
     /*@Test

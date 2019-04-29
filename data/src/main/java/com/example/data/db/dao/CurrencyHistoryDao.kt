@@ -1,41 +1,82 @@
 package com.example.data.db.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
+import androidx.room.*
 import androidx.room.OnConflictStrategy.REPLACE
-import androidx.room.Query
 import com.example.data.db.entity.CurrencyEntity
 import com.example.data.db.entity.HistoryEntity
 import com.example.data.db.entity.RateEntity
+import com.example.data.network.HistoryResponse
+
 
 @Dao
-interface CurrencyHistoryDao {
+abstract class CurrencyHistoryDao {
+
+    fun insert(history: HistoryResponse) {
+        val id = 4444L
+        val historyEntity = HistoryEntity(
+            id, history.base, history.startDate, history.endDate
+        )
+        val rates = history.rates.map {
+            RateEntity(historyId = id, date = it.date)
+        }
+        val currencies = history.rates.mapIndexed { index, rate ->
+            rate.currencies.map {
+                CurrencyEntity(rateId = index+1L, name = it.name, value = it.value)
+            }
+        }.flatten()
+        insertCurrencyHistory(historyEntity)
+        insertRates(rates)
+        insertCurrencies(currencies)
+    }
 
     @Insert(onConflict = REPLACE)
-    fun insertCurrencyHistory(currencyHistory: HistoryEntity)
+    abstract fun insertCurrencyHistory(currencyHistory: HistoryEntity)
 
     @Insert(onConflict = REPLACE)
-    fun insertRates(rates: List<RateEntity>)
+    abstract fun insertRates(rates: List<RateEntity>)
 
     @Insert(onConflict = REPLACE)
-    fun insertCurrencies(currencies: HistoryEntity)
+    abstract fun insertCurrencies(currencies: List<CurrencyEntity>)
 
     @Query("SELECT * FROM currency_history LIMIT 1")
-    fun loadHistory(): HistoryEntity
+    abstract fun loadHistory(): HistoryEntity
 
     @Query(
         """
-            SELECT * FROM rate
-            INNER JOIN currency_history AS cs ON cs.id = rate.rate_id
+            SELECT * FROM rate AS r
+            INNER JOIN currency_history AS ch ON ch.id = r.history_id
         """
     )
-    fun loadHistoryRates(): List<RateEntity>
+    abstract fun loadHistoryRates(): List<RateEntity>
 
     @Query(
         """
-            SELECT * FROM currency
-            INNER JOIN rate AS r ON r.rate_id = currency.currency_id
+            SELECT * FROM currency AS c
+            INNER JOIN rate AS r ON r.rate_id = c.rate_id
         """
     )
-    fun loadRateCurrencies(): List<CurrencyEntity>
+    abstract fun loadRateCurrencies(): List<CurrencyEntity>
+
+    @Query(
+        """
+            SELECT * FROM currency_history AS ch, rate AS r, currency AS c
+            INNER JOIN currency_history ON ch.id = r.history_id
+            INNER JOIN rate ON r.rate_id = c.rate_id
+        """
+    )
+    abstract fun loadHistoryCache(): HistoryCache
+}
+
+class HistoryCache {
+    @Embedded
+    var history: HistoryEntity? = null
+    @Relation(parentColumn = "id", entityColumn = "history_id", entity = RateEntity::class)
+    var rates: List<RateWithCurrencies>? = null
+}
+
+class RateWithCurrencies {
+    @Embedded
+    var rate: RateEntity? = null
+    @Relation(parentColumn = "rate_id", entityColumn = "rate_id")
+    var currencies: List<CurrencyEntity>? = null
 }
