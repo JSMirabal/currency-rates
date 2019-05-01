@@ -1,5 +1,6 @@
 package com.example.data.network
 
+import com.example.data.core.NOT_FOUND
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -12,17 +13,18 @@ import java.lang.reflect.Type
 class HistoryDeserializer : JsonDeserializer<HistoryResponse> {
 
     override fun deserialize(
+
         json: JsonElement?,
         typeOfT: Type?,
         context: JsonDeserializationContext?
     ): HistoryResponse {
-
+        // Parse per type
         val jsonObject = json?.asJsonObject
         return HistoryResponse(
-            jsonObject?.get("base")?.asString ?: "not found",
+            jsonObject?.get("base")?.asString ?: NOT_FOUND,
             deserializeRates(jsonObject),
-            jsonObject?.get("start_at")?.asString ?: "not found",
-            jsonObject?.get("end_at")?.asString ?: "not found"
+            jsonObject?.get("start_at")?.asString ?: NOT_FOUND,
+            jsonObject?.get("end_at")?.asString ?: NOT_FOUND
         )
     }
 

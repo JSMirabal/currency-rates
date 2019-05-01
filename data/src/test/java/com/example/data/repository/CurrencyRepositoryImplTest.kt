@@ -1,26 +1,22 @@
 package com.example.data.repository
 
-import com.example.data.BaseUnitTest
-import com.example.domain.core.Failure
+import com.example.data.network.Service
 import com.example.domain.core.Params
-import kotlinx.coroutines.runBlocking
-import org.amshove.kluent.shouldEqual
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 /**
  * Created by jsmirabal on 4/21/2019.
  */
-class CurrencyRepositoryImplTest : BaseUnitTest() {
+class CurrencyRepositoryImplTest {
 
-    private val startDate = "04-01-2019"
-    private val endDate = "04-21-2019"
+    private val startDate = "2019-04-01"
+    private val endDate = "2019-04-21"
 
-    /*@Test
+    @Test
     fun `executing fetchRange should return anything`() {
-        val result = CurrencyRepositoryImpl().fetchHistory(Params(startDate, endDate))
+        val result = Service.fetchHistory(Params(startDate, endDate))
         println(result)
-        result shouldEqual endDate
-    }*/
+    }
 
     /*@Test
     fun `executing fetchRange() should return Failure or CurrencyHistory`() {

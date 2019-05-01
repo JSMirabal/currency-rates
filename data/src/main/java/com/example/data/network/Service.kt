@@ -37,17 +37,21 @@ object Service {
                 .build()
         }
 
-        private val currencyService = retrofit.create(CurrencyApi::class.java)
 
         fun fetchHistory(params: Params) =
-            currencyService
-                .fetchHistory(params.startDate, params.endDate, params.base, params.symbols)
-                .execute().run {
-                    when {
-                        isSuccessful -> body()?.run { Right(this) } ?: Left(
-                            Failure.ApiFailure("Empty body"))
-                        else -> Left(Failure.ApiFailure(errorBody()?.string() ?: "Unknown API Error"))
+            try {
+                retrofit.create(CurrencyApi::class.java)
+                    .fetchHistory(params.startDate, params.endDate, params.base, params.symbols)
+                    .execute()
+                    .run {
+                        when {
+                            isSuccessful -> body()?.run { Right(this) } ?: Left(Failure.ApiFailure("Empty body"))
+                            else -> Left(Failure.ApiFailure(errorBody()?.string() ?: "Unknown API Error"))
+                        }
                     }
-                }
+
+            } catch (e: Exception) {
+                Left(Failure.ApiFailure("Unexpected error: ${e.message}"))
+            }
     }
 }

@@ -12,7 +12,7 @@ import com.example.data.network.HistoryResponse
 abstract class CurrencyHistoryDao {
 
     fun insert(history: HistoryResponse) {
-        val id = 4444L
+        val id = history.hashCode().toLong()
         val historyEntity = HistoryEntity(
             id, history.base, history.startDate, history.endDate
         )
@@ -62,9 +62,10 @@ abstract class CurrencyHistoryDao {
             SELECT * FROM currency_history AS ch, rate AS r, currency AS c
             INNER JOIN currency_history ON ch.id = r.history_id
             INNER JOIN rate ON r.rate_id = c.rate_id
+            WHERE ch.start_date = :startDate AND ch.end_date = :endDate
         """
     )
-    abstract fun loadHistoryCache(): HistoryCache
+    abstract fun loadHistoryCache(startDate: String, endDate: String): HistoryCache
 }
 
 class HistoryCache {

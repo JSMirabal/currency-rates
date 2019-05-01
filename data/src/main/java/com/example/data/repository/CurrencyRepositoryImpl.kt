@@ -1,31 +1,53 @@
 package com.example.data.repository
 
 import android.content.Context
+import android.util.Log
 import com.example.data.core.toCurrencyHistory
 import com.example.data.db.CurrencyDatabase
+import com.example.data.network.HistoryResponse
 import com.example.data.network.Service
 import com.example.domain.core.Either
+import com.example.domain.core.Either.*
 import com.example.domain.core.Failure
 import com.example.domain.core.Params
 import com.example.domain.entity.CurrencyHistory
 import com.example.domain.repository.CurrencyRepository
+import java.lang.Exception
 
 class CurrencyRepositoryImpl(private val context: Context) : CurrencyRepository {
 
-    override fun fetchHistory(params: Params) = fromService(params)
+    companion object {
+        const val TAG = "CurrencyRepositoryImpl"
+    }
+
+    private val database by lazy {
+        CurrencyDatabase.getDatabase(context)
+    }
+
+    override fun fetchHistory(params: Params) = fromDatabase(params)
 
     private fun fromService(params: Params): Either<Failure, CurrencyHistory> {
+        Log.d(TAG, "Fetching history from service")
         return Service.fetchHistory(params).transform(
             {
-                Either.Left(it)
+                Left(it)
             },
             {
-                Either.Right(it.toCurrencyHistory())
+                save(it)
+                Right(it.toCurrencyHistory())
             }
         )
     }
 
-    /*private fun fromDatabase(): Either<Failure, CurrencyHistory> {
-        val dao = CurrencyDatabase.getDatabase(context).historyDao()
-    }*/
+    private fun save(data: HistoryResponse) {
+        database.historyDao().insert(data)
+    }
+
+    private fun fromDatabase(params: Params) =
+        try {
+            Right(database.historyDao().loadHistoryCache(params.startDate, params.endDate).toCurrencyHistory())
+        } catch (e: Exception) {
+            Log.e(TAG, "Error fetching from database ${e.message}")
+            fromService(params)
+        }
 }

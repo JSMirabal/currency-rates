@@ -6,4 +6,5 @@ package com.example.domain.core
 sealed class Failure {
     object NetworkFailure: Failure()
     data class ApiFailure(val message: String): Failure()
+    data class DatabaseFailure(val message: String): Failure()
 }

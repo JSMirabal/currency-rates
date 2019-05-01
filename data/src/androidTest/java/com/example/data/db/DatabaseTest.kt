@@ -20,8 +20,10 @@ import java.io.IOException
 class DatabaseTest: BaseAndroidTest() {
     private lateinit var historyDao: CurrencyHistoryDao
     private lateinit var db: CurrencyDatabase
+    private val startDate = "2019-04-01"
+    private val endDate = "2019-04-26"
     private val currencyHistory = HistoryEntity(
-        4444, "USD", "2019-04-01", "2019-04-26"
+        4444, "USD", startDate, endDate
     )
     private val historyRates = listOf(
         RateEntity(1, date = "2019-04-03", historyId = 4444),
@@ -42,7 +44,7 @@ class DatabaseTest: BaseAndroidTest() {
     )
 
     private val historyResponse = HistoryResponse(
-        base = "EUR", startDate = "2019-04-01", endDate = "2019-04-26", rates = listOf(
+        base = "EUR", startDate = startDate, endDate = endDate, rates = listOf(
             Rate(
                 date = "2019-04-03", currencies = listOf(
                     Currency(name = "USD", value = 1.2421),
@@ -105,7 +107,7 @@ class DatabaseTest: BaseAndroidTest() {
         historyDao.insertCurrencyHistory(currencyHistory)
         historyDao.insertRates(historyRates)
         historyDao.insertCurrencies(rateCurrencies)
-        val history = historyDao.loadHistoryCache()
+        val history = historyDao.loadHistoryCache(startDate, endDate)
         history.history shouldEqual currencyHistory
     }
 
@@ -113,7 +115,7 @@ class DatabaseTest: BaseAndroidTest() {
     @Throws(Exception::class)
     fun insertHistoryResponse_LoadingDataShouldReturnSameValues() {
         historyDao.insert(historyResponse)
-        val result = historyDao.loadHistoryCache()
+        val result = historyDao.loadHistoryCache(startDate, endDate)
         result.rates?.size shouldEqual historyResponse.rates.size
     }
 }
