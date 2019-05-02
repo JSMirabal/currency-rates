@@ -31,20 +31,22 @@ dependencies {
     implementation 'com.google.android.material:material:1.1.0-alpha05'
 
     // ViewModel and LiveData
-    def lifecycle_version = '2.0.0-beta01'
+    def lifecycle_version = '2.1.0-alpha04'
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-alpha04"
-    testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
 
     def work_version = "1.0.1"
     implementation "android.arch.work:work-runtime-ktx:$work_version"
 
     // Local modules
     implementation project(path: ':domain')
+    implementation project(path: ':data')
 
     androidTestImplementation 'androidx.test:runner:1.2.0-alpha04'
     androidTestImplementation 'androidx.test:rules:1.1.1'
-    androidTestImplementation "androidx.arch.core:core-testing:$lifecycle_version"
+    def life_cycle_test = "2.0.1"
+    testImplementation "androidx.arch.core:core-testing:$life_cycle_test"
+    androidTestImplementation "androidx.arch.core:core-testing:$life_cycle_test"
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha04'
 
     // Leak detector

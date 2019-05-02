@@ -13,8 +13,11 @@ import com.example.domain.core.Params
 import com.example.domain.entity.CurrencyHistory
 import com.example.domain.repository.CurrencyRepository
 import java.lang.Exception
+import java.lang.RuntimeException
+import javax.inject.Inject
 
-class CurrencyRepositoryImpl(private val context: Context) : CurrencyRepository {
+class CurrencyRepositoryImpl
+    @Inject constructor(private val context: Context) : CurrencyRepository {
 
     companion object {
         const val TAG = "CurrencyRepositoryImpl"
@@ -45,9 +48,16 @@ class CurrencyRepositoryImpl(private val context: Context) : CurrencyRepository 
 
     private fun fromDatabase(params: Params) =
         try {
-            Right(database.historyDao().loadHistoryCache(params.startDate, params.endDate).toCurrencyHistory())
+            Log.d(TAG, "Fetching history from database")
+            val result = database.historyDao().loadHistoryCache(params.startDate, params.endDate)
+            if (result != null) {
+                Right(result.toCurrencyHistory())
+            } else {
+                throw RuntimeException("Date range (${params.startDate} | ${params.endDate}) not found.")
+            }
+
         } catch (e: Exception) {
-            Log.e(TAG, "Error fetching from database ${e.message}")
+            Log.e(TAG, "Error fetching from database. ${e.message}")
             fromService(params)
         }
 }

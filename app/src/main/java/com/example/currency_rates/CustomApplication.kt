@@ -1,6 +1,9 @@
 package com.example.currency_rates
 
 import android.app.Application
+import com.example.currency_rates.core.di.ApplicationComponent
+import com.example.currency_rates.core.di.ApplicationModule
+import com.example.currency_rates.core.di.DaggerApplicationComponent
 import com.example.currency_rates.core.util.debug
 import com.squareup.leakcanary.LeakCanary
 
@@ -8,6 +11,10 @@ import com.squareup.leakcanary.LeakCanary
  * Created by jsmirabal on 4/18/2019.
  */
 class CustomApplication: Application() {
+
+    val appComponent: ApplicationComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
+        DaggerApplicationComponent.builder().applicationModule(ApplicationModule(this)).build()
+    }
 
     override fun onCreate() {
         super.onCreate()

@@ -9,11 +9,14 @@ import com.example.domain.core.Params
 import com.example.domain.entity.CurrencyHistory
 import com.example.domain.repository.CurrencyRepository
 import com.example.domain.usecase.FetchCurrencyHistory
+import core.TestDispatcherExtension
 import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.junit5.MockKExtension
 import io.mockk.mockk
 import io.mockk.verify
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldEqual
@@ -25,7 +28,8 @@ import org.junit.jupiter.api.extension.ExtendWith
 /**
  * Created by jsmirabal on 4/21/2019.
  */
-@ExtendWith(MockKExtension::class)
+@ExperimentalCoroutinesApi
+@ExtendWith(MockKExtension::class, TestDispatcherExtension::class)
 class FetchCurrencyHistoryTest {
 
     private val repository = mockk<CurrencyRepository>()
@@ -63,18 +67,21 @@ class FetchCurrencyHistoryTest {
 
     @Test
     fun `running async use case should return expected Right value`() {
-        var result: Either<Failure, CurrencyHistory>? = null
-        runBlocking { result = fetchCurrencyRate(params).await() }
-        result shouldEqual Right(currencyHistory)
+        runBlocking {
+            fetchCurrencyRate(params) { result ->
+                result shouldEqual Right(currencyHistory)
+            }
+            delay(500)
+        }
     }
 
     @Test
     fun `running async use case should return expected Left value`() {
-        var result: Either<Failure, CurrencyHistory>? = null
         val expected: Either<Failure, CurrencyHistory> = Left(Failure.ApiFailure("Something went wrong"))
         every { repository.fetchHistory(params) } returns expected
-        runBlocking { result = fetchCurrencyRate(params).await() }
-        result shouldEqual expected
+        fetchCurrencyRate(params) { result ->
+            result shouldEqual expected
+        }
     }
 
     @Test
@@ -84,9 +91,9 @@ class FetchCurrencyHistoryTest {
             Right(currencyHistory)
         }
         runBlocking {
-            val job = fetchCurrencyRate(params)
+            fetchCurrencyRate(params)
             fetchCurrencyRate.cancel()
-            (job.isCancelled) shouldBe true
+            (fetchCurrencyRate.isCancelled()) shouldBe true
         }
     }
 }

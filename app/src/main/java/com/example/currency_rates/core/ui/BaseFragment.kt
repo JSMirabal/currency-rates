@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.currency_rates.CustomApplication
 import com.example.currency_rates.core.extensions.gone
 import com.example.currency_rates.core.extensions.visible
 import kotlinx.android.synthetic.main.activity_main.*
@@ -13,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_main.*
  * Created by jsmirabal on 4/18/2019.
  */
 abstract class BaseFragment: Fragment() {
+
+    val appComponent = CustomApplication.get().appComponent
 
     abstract fun layoutId(): Int
 

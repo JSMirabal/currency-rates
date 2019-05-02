@@ -65,7 +65,7 @@ abstract class CurrencyHistoryDao {
             WHERE ch.start_date = :startDate AND ch.end_date = :endDate
         """
     )
-    abstract fun loadHistoryCache(startDate: String, endDate: String): HistoryCache
+    abstract fun loadHistoryCache(startDate: String, endDate: String): HistoryCache?
 }
 
 class HistoryCache {

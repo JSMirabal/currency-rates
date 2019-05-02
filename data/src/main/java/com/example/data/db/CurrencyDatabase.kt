@@ -27,7 +27,7 @@ abstract class CurrencyDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     CurrencyDatabase::class.java,
-                    "currency_database"
+                    "currency_database.db"
                 ).build()
                 INSTANCE = instance
                 return instance

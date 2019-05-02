@@ -2,16 +2,19 @@ package core
 
 import com.example.domain.core.BaseUseCase
 import com.example.domain.core.Either
-import com.example.domain.core.Failure
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.amshove.kluent.shouldBe
 import org.amshove.kluent.shouldEqual
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
 
 /**
  * Created by jsmirabal on 4/19/2019.
  */
+@ExperimentalCoroutinesApi
+@ExtendWith(TestDispatcherExtension::class)
 class BaseUseCaseTest {
 
     private val myUseCase = MyUseCase()
@@ -26,24 +29,20 @@ class BaseUseCaseTest {
 
     @Test
     fun `running async use case should return expected Right value`() {
-        var result: Either<Failure, MyType>? = null
-
         val params = MyParams("TestParam")
 
-        runBlocking { result = myUseCase(params).await() }
-
-        result shouldEqual Either.Right(MyType(TYPE_TEST))
+        myUseCase(params) { result ->
+            result shouldEqual Either.Right(MyType(TYPE_TEST))
+        }
     }
 
     @Test
     fun `calling cancel() should return a job cancelled`() {
-        runBlocking {
-            myUseCase.delay = 3000
-            val params = MyParams("TestParam")
-            val job = myUseCase(params)
-            myUseCase.cancel()
-            job.isCancelled shouldBe true
-        }
+        myUseCase.delay = 3000
+        val params = MyParams("TestParam")
+        myUseCase(params)
+        myUseCase.cancel()
+        myUseCase.isCancelled() shouldBe true
     }
 }
 

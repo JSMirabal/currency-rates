@@ -108,7 +108,7 @@ class DatabaseTest: BaseAndroidTest() {
         historyDao.insertRates(historyRates)
         historyDao.insertCurrencies(rateCurrencies)
         val history = historyDao.loadHistoryCache(startDate, endDate)
-        history.history shouldEqual currencyHistory
+        history?.history shouldEqual currencyHistory
     }
 
     @Test
@@ -116,6 +116,6 @@ class DatabaseTest: BaseAndroidTest() {
     fun insertHistoryResponse_LoadingDataShouldReturnSameValues() {
         historyDao.insert(historyResponse)
         val result = historyDao.loadHistoryCache(startDate, endDate)
-        result.rates?.size shouldEqual historyResponse.rates.size
+        result?.rates?.size shouldEqual historyResponse.rates.size
     }
 }
