@@ -1,7 +1,9 @@
 package com.example.currency_rates.feature.main
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -28,12 +30,16 @@ class MainFragment: BaseFragment() {
         super.onCreate(savedInstanceState)
         appComponent.inject(this)
         viewModel = ViewModelProviders.of(this, viewModelFactory)[MainViewModel::class.java]
-        viewModel.successLiveData.observe(this, Observer {
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        viewModel.successLiveData.observe(viewLifecycleOwner, Observer {
             renderView(it)
         })
-        viewModel.errorLiveData.observe(this, Observer {
+        viewModel.errorLiveData.observe(viewLifecycleOwner, Observer {
             renderError(it)
         })
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     private fun renderError(it: Failure?) {
