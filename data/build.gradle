@@ -27,10 +27,7 @@ dependencies {
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
-
-    implementation group: 'org.reactivestreams', name: 'reactive-streams', version: '1.0.2'
 
     implementation project(path: ':domain')
 
@@ -39,7 +36,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
-    androidTestImplementation 'androidx.test:runner:1.2.0-alpha04'
+    androidTestImplementation 'androidx.test:runner:1.2.0-beta01'
     androidTestImplementation 'androidx.test:rules:1.1.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'org.amshove.kluent:kluent-android:1.28'
