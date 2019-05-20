@@ -1,7 +1,7 @@
 package com.example.currency_rates.core.di
 
 import com.example.currency_rates.core.di.viewmodel.ViewModelModule
-import com.example.currency_rates.feature.main.MainFragment
+import com.example.currency_rates.feature.main.ui.MainFragment
 import dagger.Component
 import javax.inject.Singleton
 

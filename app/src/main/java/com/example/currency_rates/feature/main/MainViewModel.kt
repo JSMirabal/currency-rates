@@ -2,6 +2,7 @@ package com.example.currency_rates.feature.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.currency_rates.feature.main.model.CurrencyModel
 import com.example.domain.core.Failure
 import com.example.domain.core.Params
 import com.example.domain.entity.CurrencyHistory
@@ -14,7 +15,7 @@ import javax.inject.Inject
 class MainViewModel
 @Inject constructor(private val fetchCurrencyHistory: FetchCurrencyHistory) : ViewModel() {
 
-    val successLiveData = MutableLiveData<CurrencyView>()
+    val successLiveData = MutableLiveData<CurrencyModel>()
     val errorLiveData = MutableLiveData<Failure>()
 
     override fun onCleared() {
@@ -31,7 +32,7 @@ class MainViewModel
     }
 
     private fun handleSuccess(result: CurrencyHistory) {
-        successLiveData.value = CurrencyView(
+        successLiveData.value = CurrencyModel(
             result.rates
         )
     }
