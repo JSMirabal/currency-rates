@@ -1,15 +1,21 @@
 package com.example.currency_rates.feature.main.ui.holder
 
-import android.util.Log
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import android.widget.TextView
 import com.example.currency_rates.R
 import com.example.currency_rates.core.ui.BaseViewHolder
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.currency_rates.core.ui.custom.MyCalendarDialog
 
-class CurrencyHistoryViewHolder(itemView: View) : BaseViewHolder(itemView) {
+class CurrencyHistoryViewHolder(private val view: View) : BaseViewHolder(view) {
 
     override fun bind() {
-        Log.d("CurrencyHistory", "Binding...")
+        val text = itemView.findViewById<TextView>(R.id.textView)
+        text.setOnClickListener { MyCalendarDialog(itemView.context, onDateSelected()).showCalendar() }
+    }
+
+    private fun onDateSelected() = object : MyCalendarDialog.CalendarListener {
+        override fun onCalendarDateSelected(selectedDate: Long) {
+            //TODO add missing logic
+        }
     }
 }

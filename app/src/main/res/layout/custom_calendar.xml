@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/calendarDayName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:padding="4dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Tuesday" />
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/calendarLongDate"
+            android:gravity="center"
+            android:padding="4dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"
+            tools:text="May, 12-2015"
+            app:layout_constraintTop_toBottomOf="@+id/calendarDayName"
+            android:fontFamily="@font/roboto_medium"/>
+
+    <CalendarView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/calendarView"
+            app:layout_constraintTop_toBottomOf="@+id/calendarLongDate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,12 +11,11 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager2.widget.ViewPager2
 import com.example.currency_rates.R
 import com.example.currency_rates.core.ui.BaseFragment
-import com.example.currency_rates.feature.main.model.CurrencyModel
 import com.example.currency_rates.feature.main.MainViewModel
+import com.example.currency_rates.feature.main.model.CurrencyModel
 import com.example.domain.core.Failure
-import com.example.domain.core.Params
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_main.view_pager as viewPager
+import kotlinx.android.synthetic.main.fragment_main.*
 import javax.inject.Inject
 
 /**
