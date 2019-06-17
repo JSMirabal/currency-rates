@@ -55,7 +55,7 @@ class MainFragment: BaseFragment() {
         viewPager.adapter = this.adapter
         viewPager.registerOnPageChangeCallback(onPageChanged())
         if (savedInstanceState == null) {
-            showProgress()
+            //showProgress()
             //viewModel.loadRates(Params("2019-04-16", "2019-04-30"))
         }
     }
