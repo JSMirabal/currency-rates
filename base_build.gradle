@@ -10,6 +10,12 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
+    // Retrofit
+    def retrofit = "2.6.1"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.1'
+
     // Coroutines
     def coroutines = '1.1.1'
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"

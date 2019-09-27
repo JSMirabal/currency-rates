@@ -1,6 +1,5 @@
 package com.example.data.network
 
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -9,10 +8,10 @@ import retrofit2.http.Query
  */
 interface CurrencyApi {
     @GET("/history")
-    fun fetchHistory(
+    suspend fun fetchHistory(
         @Query("start_at") startDate: String,
         @Query("end_at") endDate: String,
         @Query("base") base: String,
         @Query("symbols") symbols: String
-    ): Call<HistoryResponse>
+    ): HistoryResponse
 }

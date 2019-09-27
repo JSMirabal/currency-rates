@@ -9,5 +9,5 @@ import com.example.domain.entity.CurrencyHistory
  * Created by jsmirabal on 4/19/2019.
  */
 interface CurrencyRepository {
-    fun fetchHistory(params: Params): Either<Failure, CurrencyHistory>
+    suspend fun fetchHistory(params: Params): Either<Failure, CurrencyHistory>
 }

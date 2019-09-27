@@ -28,12 +28,6 @@ android {
 
 dependencies {
 
-    // Retrofit
-    def retrofit = "2.6.1"
-    implementation "com.squareup.retrofit2:retrofit:$retrofit"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.1'
-
     implementation project(path: ':domain')
 
     // Room for database

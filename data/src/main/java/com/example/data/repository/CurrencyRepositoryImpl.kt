@@ -1,37 +1,33 @@
 package com.example.data.repository
 
-import android.content.Context
 import android.util.Log
 import com.example.data.core.toCurrencyHistory
 import com.example.data.db.CurrencyDatabase
 import com.example.data.network.HistoryResponse
 import com.example.data.network.Service
 import com.example.domain.core.Either
-import com.example.domain.core.Either.*
+import com.example.domain.core.Either.Left
+import com.example.domain.core.Either.Right
 import com.example.domain.core.Failure
 import com.example.domain.core.Params
 import com.example.domain.entity.CurrencyHistory
 import com.example.domain.repository.CurrencyRepository
-import java.lang.Exception
-import java.lang.RuntimeException
 import javax.inject.Inject
 
-class CurrencyRepositoryImpl
-    @Inject constructor(private val context: Context) : CurrencyRepository {
+class CurrencyRepositoryImpl @Inject constructor(
+    private val service: Service,
+    private val database: CurrencyDatabase
+) : CurrencyRepository {
 
     companion object {
         const val TAG = "CurrencyRepositoryImpl"
     }
 
-    private val database by lazy {
-        CurrencyDatabase.getDatabase(context)
-    }
+    override suspend fun fetchHistory(params: Params) = fromDatabase(params)
 
-    override fun fetchHistory(params: Params) = fromDatabase(params)
-
-    private fun fromService(params: Params): Either<Failure, CurrencyHistory> {
+    private suspend fun fromService(params: Params): Either<Failure, CurrencyHistory> {
         Log.d(TAG, "Fetching history from service")
-        return Service.fetchHistory(params).transform(
+        return service.fetchHistory(params).transform(
             {
                 Left(it)
             },
@@ -46,7 +42,7 @@ class CurrencyRepositoryImpl
         database.historyDao().insert(data)
     }
 
-    private fun fromDatabase(params: Params) =
+    private suspend fun fromDatabase(params: Params) =
         try {
             Log.d(TAG, "Fetching history from database")
             val result = database.historyDao().loadHistoryCache(params.startDate, params.endDate)

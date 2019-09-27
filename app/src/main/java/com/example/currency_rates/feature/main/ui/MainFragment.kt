@@ -14,6 +14,7 @@ import com.example.currency_rates.core.ui.BaseFragment
 import com.example.currency_rates.feature.main.MainViewModel
 import com.example.currency_rates.feature.main.model.CurrencyModel
 import com.example.domain.core.Failure
+import com.example.domain.core.Params
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_main.*
 import javax.inject.Inject
@@ -55,8 +56,8 @@ class MainFragment: BaseFragment() {
         viewPager.adapter = this.adapter
         viewPager.registerOnPageChangeCallback(onPageChanged())
         if (savedInstanceState == null) {
-            //showProgress()
-            //viewModel.loadRates(Params("2019-04-16", "2019-04-30"))
+            showProgress()
+            viewModel.loadRates(Params("2019-04-16", "2019-04-30"))
         }
     }
 
