@@ -6,6 +6,8 @@ import android.widget.TextView
 import com.example.currency_rates.R
 import com.example.currency_rates.core.ui.BaseViewHolder
 import com.example.currency_rates.core.ui.custom.MyCalendarDialog
+import com.example.currency_rates.feature.main.model.CurrencyModel
+import com.example.domain.entity.CurrencyHistory
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -14,9 +16,9 @@ import com.github.mikephil.charting.formatter.LargeValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 
 
-class CurrencyHistoryViewHolder(private val view: View) : BaseViewHolder(view) {
+class CurrencyHistoryViewHolder(private val view: View) : BaseViewHolder<CurrencyModel.History>(view) {
 
-    override fun bind() {
+    override fun bind(data: CurrencyModel.History) {
         val text = view.findViewById<TextView>(R.id.textView)
         text.setOnClickListener { MyCalendarDialog(itemView.context, onDateSelected()).showCalendar() }
 

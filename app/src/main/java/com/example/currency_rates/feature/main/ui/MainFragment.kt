@@ -22,7 +22,7 @@ import javax.inject.Inject
 /**
  * Created by jsmirabal on 4/18/2019.
  */
-class MainFragment: BaseFragment() {
+class MainFragment : BaseFragment() {
 
     private val TAG: String = MainFragment::class.java.simpleName
 
@@ -41,7 +41,11 @@ class MainFragment: BaseFragment() {
         adapter = MainAdapter()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         viewModel.successLiveData.observe(viewLifecycleOwner, Observer {
             renderView(it)
         })
@@ -55,25 +59,37 @@ class MainFragment: BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewPager.adapter = this.adapter
         viewPager.registerOnPageChangeCallback(onPageChanged())
-        if (savedInstanceState == null) {
-            showProgress()
-            viewModel.loadRates(Params("2019-04-16", "2019-04-30"))
-        }
     }
 
     private fun onPageChanged() = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
             Log.d(TAG, "Page selected: $position")
+            when (MainViewType.getFrom(adapter.getItemViewType(position))) {
+                MainViewType.HISTORY -> {
+                    showProgress()
+                    viewModel.loadRates(Params("2019-04-16", "2019-04-30"))
+                }
+
+                MainViewType.AVERAGE -> {
+
+                }
+
+                MainViewType.LATEST -> {
+
+                }
+            }
         }
     }
 
     private fun renderError(it: Failure?) {
         hideProgress()
-        Snackbar.make(this.requireView(), it?.toString() ?: "Some error", Snackbar.LENGTH_LONG).show()
+        Snackbar.make(this.requireView(), it?.toString() ?: "Some error", Snackbar.LENGTH_LONG)
+            .show()
     }
 
     private fun renderView(it: CurrencyModel?) {
         hideProgress()
+        it?.let { adapter.update(it) }
     }
 }

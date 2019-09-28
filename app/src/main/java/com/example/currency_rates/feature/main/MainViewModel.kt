@@ -32,8 +32,6 @@ class MainViewModel
     }
 
     private fun handleSuccess(result: CurrencyHistory) {
-        successLiveData.value = CurrencyModel(
-            result.rates
-        )
+        successLiveData.value = CurrencyModel.History(result)
     }
 }
